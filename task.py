@@ -15,42 +15,24 @@ def conv_endian(num, endian='big'):
 
     negativeNum = False
 
-    # variables to store the working hex code,
-    # and the output string,
+    # variables to store the output string,
     # and the bytes in a list in big endian order
-    workingHex = []
     outputStr = ''
     bigEndianByteList = []
 
     # remove minus sign if negative number, set negativeNum
     if num < 0:
         negativeNum = True
-        num = str(num)
-        num = int(num[1:])
+        num = abs_value(num)
 
     # return '00' byte
     if num == 0:
         return '00'
 
-    while(num != 0):
-        # store the remainder
-        tmpRemainder = num % 16
-
-        # append a alphanumeric or alphabetic character
-        if(tmpRemainder < 10):
-            workingHex.append(chr(tmpRemainder + 48))
-        else:
-            workingHex.append(chr(tmpRemainder + 55))
-
-        # get rid off least significant value
-        num = int(num / 16)
-
-    # append a zero if odd numbered nibbles in list
-    if len(workingHex) % 2 == 1:
-        workingHex.append('0')
+    rawHex = calc_raw_hex(num)
 
     # counters and formmating string variables
-    i = len(workingHex) - 1
+    i = len(rawHex) - 1
     charsInString = 0
     currentByteStr = ''
     while(i >= 0):
@@ -61,8 +43,8 @@ def conv_endian(num, endian='big'):
             bigEndianByteList.append(currentByteStr)
             # reset byte string
             currentByteStr = ''
-        outputStr = outputStr + workingHex[i]
-        currentByteStr = currentByteStr + workingHex[i]
+        outputStr = outputStr + rawHex[i]
+        currentByteStr = currentByteStr + rawHex[i]
         charsInString = charsInString + 1
         i = i - 1
 
@@ -85,5 +67,37 @@ def conv_endian(num, endian='big'):
         return None
 
 
+# add minus sign infron of arguement
 def make_neg(arg_str):
     return '-' + arg_str
+
+
+# remove minus sign if negative number, set negativeNum
+def abs_value(num):
+    num = str(num)
+    num = int(num[1:])
+    return num
+
+
+# calculate the hex of num and return it w/out formatting
+def calc_raw_hex(num):
+    # store the working (raw/unformatted) hex code
+    workingHex = []
+    while(num != 0):
+        # store the remainder
+        tmpRemainder = num % 16
+
+        # append a alphanumeric or alphabetic character
+        if(tmpRemainder < 10):
+            workingHex.append(chr(tmpRemainder + 48))
+        else:
+            workingHex.append(chr(tmpRemainder + 55))
+
+        # get rid off least significant value
+        num = int(num / 16)
+
+    # append a zero if odd numbered nibbles in list
+    if len(workingHex) % 2 == 1:
+        workingHex.append('0')
+
+    return workingHex
