@@ -1,7 +1,5 @@
 
 
-def conv_num(num_str):
-    return True
 
 
 def my_datetime(num_sec):
