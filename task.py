@@ -7,8 +7,50 @@ def conv_num(num_str):
 
 
 def my_datetime(num_sec):
-    return True
+    def leap_year_check(year):
+        if year % 4 == 0:
+            days = 366
+        elif year % 100 == 0:
+            days = 365
+        elif year % 400 == 0:
+            days = 366
+        else:
+            days = 365
+        return days
 
+    def get_year(days):
+        year = 1969
+        while days >= 0:
+            year = year + 1
+            days_in_year = leap_year_check(year)
+            if days > days_in_year:
+                days = days - days_in_year
+            else:
+                break
+        return year, days
+
+    def get_month(days, year):
+        if days == 0:
+            days = 1
+
+        month_num = 1
+        months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if leap_year_check(year) == 366:
+            months[1] = 29
+        for x in months:
+            if x < days:
+                month_num = month_num + 1
+                days = days - x
+            else:
+                break
+        return month_num, days
+    num_days = num_sec // 86400
+
+    year, days = get_year(num_days)
+    month, days = get_month(days, year)
+
+    date = "%02d-%02d-%d" % (month, days, year)
+    return date
 
 def conv_endian(num, endian='big'):
     # validate input arguements
