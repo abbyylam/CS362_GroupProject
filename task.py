@@ -1,6 +1,11 @@
 
 
 def conv_num(num_str):
+    characters = "0123456789abcdefghijklmnopqrstuvwxyz"
+    return sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
+
+
+def conv_num(num_str):
     return True
 
 
