@@ -13,7 +13,20 @@ class TestCase_ConvNum(unittest.TestCase):
 class TestCase_MyDateTime(unittest.TestCase):
 
     def test1(self):
-        self.assertTrue(my_datetime(123))
+        expected = '01-01-1970'
+        self.assertEqual(expected, my_datetime(0))
+
+    def test2(self):
+        expected = '11-29-1972'
+        self.assertEqual(expected, my_datetime(123456789))
+
+    def test3(self):
+        expected = '12-22-2282'
+        self.assertEqual(expected, my_datetime(9876543210))
+
+    def test4(self):
+        expected = '02-29-8360'
+        self.assertEqual(expected, my_datetime(201653971200))
 
 
 class TestCase_ConvEndian(unittest.TestCase):
