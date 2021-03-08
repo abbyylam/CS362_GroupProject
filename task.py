@@ -1,7 +1,9 @@
 
 
 def conv_num(num_str):
-    return True
+    characters = "0123456789abcdefghijklmnopqrstuvwxyz"
+    x = sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
+    return x
 
 
 def my_datetime(num_sec):
