@@ -52,7 +52,7 @@ def conv_num(num_str):  # noqa: C901
             result = dec_hex(num_str)
         else:
             return None
-    else:
+    else:  # https://stackoverflow.com/questions/40953460/redundant-escape-character-in-pattern
         nums_calc = re.compile("^[0-9\\.]+$")
         if nums_calc.match(num_str):
             result = dec_str()
