@@ -3,66 +3,65 @@ def conv_num(num_str):
     x = sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
     return x
 
+# determine how many days in a year (leap year or not)
+def leap_year_check(year):
+    # leap year if year number is divisible
+    # by 4 or  400 except if by 100
+    if year % 4 == 0 and (year % 400 == 0 or year % 100 != 0):
+        return 366
+    elif year % 100 == 0:
+        return 365
+    # all other years are not leap years
+    else:
+        return 365
+
+# determine year using num_sec
+def get_year(days):
+    # epoch year
+    year = 1970
+    # initial days
+    days = days + 1
+
+    while days > 0:
+        # check for about of days in year
+        days_in_year = leap_year_check(year)
+        if days > days_in_year:
+            # subtract days in year from initial days
+            days = days - days_in_year
+        # if less than a year, break
+        else:
+            break
+        # increment year
+        year = year + 1
+    return year, days
+
+# determine month and day from get_year function
+def get_month(days, year):
+    # if zero days left, first of month
+    if days == 0:
+        days = 1
+    # if leap year, February has 29 days
+    if leap_year_check(year) == 366:
+        months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    # if not leap year
+    else:
+        months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    # epoch month
+    month_num = 1
+
+    for x in months:
+        if x < days:
+            # subtract num of days of each month from remaining days
+            days = days - x
+            # each month, increment month
+            month_num = month_num + 1
+        # if not enough days for month
+        else:
+            break
+    return month_num, days
+
 
 def my_datetime(num_sec):
-
-    # determine how many days in a year (leap year or not)
-    def leap_year_check(year):
-        # leap year if year number is divisible
-        # by 4 or  400 except if by 100
-        if year % 4 == 0 and (year % 400 == 0 or year % 100 != 0):
-            return 366
-        elif year % 100 == 0:
-            return 365
-        # all other years are not leap years
-        else:
-            return 365
-
-    # determine year using num_sec
-    def get_year(days):
-        # epoch year
-        year = 1970
-        # initial days
-        days = days + 1
-
-        while days > 0:
-            # check for about of days in year
-            days_in_year = leap_year_check(year)
-            if days > days_in_year:
-                # subtract days in year from initial days
-                days = days - days_in_year
-            # if less than a year, break
-            else:
-                break
-            # increment year
-            year = year + 1
-        return year, days
-
-    # determine month and day from get_year function
-    def get_month(days, year):
-        # if zero days left, first of month
-        if days == 0:
-            days = 1
-        # if leap year, February has 29 days
-        if leap_year_check(year) == 366:
-            months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        # if not leap year
-        else:
-            months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        # epoch month
-        month_num = 1
-
-        for x in months:
-            if x < days:
-                # subtract num of days of each month from remaining days
-                days = days - x
-                # each month, increment month
-                month_num = month_num + 1
-            # if not enough days for month
-            else:
-                break
-        return month_num, days
-
     # 1 day = 86400 seconds
     num_days = num_sec // 86400
     # get year from get_year function
@@ -72,6 +71,7 @@ def my_datetime(num_sec):
     # date formatting
     date = "%02d-%02d-%d" % (month, days, year)
     return date
+
 
 def conv_endian(num, endian='big'):
 
