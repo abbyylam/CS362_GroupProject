@@ -3,6 +3,7 @@ def conv_num(num_str):
     x = sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
     return x
 
+
 # determine how many days in a year (leap year or not)
 def leap_year_check(year):
     # leap year if year number is divisible
@@ -14,6 +15,7 @@ def leap_year_check(year):
     # all other years are not leap years
     else:
         return 365
+
 
 # determine year using num_sec
 def get_year(days):
@@ -34,6 +36,7 @@ def get_year(days):
         # increment year
         year = year + 1
     return year, days
+
 
 # determine month and day from get_year function
 def get_month(days, year):
