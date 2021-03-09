@@ -1,6 +1,67 @@
+import re
+
+
 def conv_num(num_str):
-    characters = "0123456789abcdefghijklmnopqrstuvwxyz"
-    return sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
+   def hexaDec(x):
+       decimal = 0
+       for i, d in enumerate(x):
+           hexa = "0123456789ABCDEF"
+           val = hexa.index(d)  # 0 to 15
+           y = (len(x) - (i+1))  # power of 16
+           decimal = (val*16**y) + decimal
+       return decimal
+
+   def str_dec():
+       count = 0
+       for i in num_str:
+           if i == '.':  # check for fp num; if yes increment count
+               count += 1
+       if count > 1:
+           return None
+       num = 0
+       res = 0
+       fpres = 0  # floating-point result
+
+       if count == 0:
+           num = num_str
+       if count == 1:
+        # Adapted from https://stackoverflow.com/questions/6681743/splitting-a-number-into-the-integer-and-decimal-parts
+           num, fp = num_str.split('.')
+           for digit in fp[::-1]:
+               fpres /= 10
+               for d in '0123456789':
+                   fpres += digit > d
+       if count == 0 or count == 1:
+           for digit in num:
+               res *= 10
+               for d in '0123456789':
+                   res += digit > d
+
+       if count == 1:
+           res = res + (fpres / 10)
+       return res
+
+   result = None
+   negative = False
+   if num_str.startswith('-'):
+       negative = True
+       num_str = num_str[1:]
+   if num_str.startswith('0x'):
+       num_str = num_str[2:]  # https://stackoverflow.com/questions/47268595/when-to-use-re-compile
+       hexpattern = re.compile("^[A-F0-9]+$")
+       if hexpattern.match(num_str):
+           result = hexaDec(num_str)
+       else:
+           return None
+   else:
+       nums_calc = re.compile("^[0-9\.]+$")
+       if nums_calc.match(num_str):
+           result = str_dec()
+       else:
+           return None
+   if negative:  # for negative results
+       return result*-1
+   return result
 
 
 # determine how many days in a year (leap year or not)
