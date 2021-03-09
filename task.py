@@ -91,7 +91,7 @@ def conv_endian(num, endian='big'):
     # remove minus sign if negative number, set negativeNum
     if num < 0:
         negativeNum = True
-        num = abs_value(num)
+        num = num * -1
 
     # return '00' byte
     if num == 0:
@@ -138,13 +138,6 @@ def conv_endian(num, endian='big'):
 # add minus sign infron of arguement
 def make_neg(arg_str):
     return '-' + arg_str
-
-
-# remove minus sign if negative number, set negativeNum
-def abs_value(num):
-    num = str(num)
-    num = int(num[1:])
-    return num
 
 
 # calculate the hex of num and return it w/out formatting
