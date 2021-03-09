@@ -6,8 +6,39 @@ from task import conv_endian
 
 class TestCase_ConvNum(unittest.TestCase):
 
+    message = 'Unexpected result!'
+
     def test1(self):
-        self.assertTrue(conv_num(str(123)))
+        expected = 12345
+        self.assertEqual(expected, conv_num('12345'), self.message)
+
+    def test2(self):
+        expected = -123.45
+        self.assertEqual(expected, conv_num('-123.45'), self.message)
+
+    def test3(self):
+        expected = 0.45
+        self.assertEqual(expected, conv_num('.45'), self.message)
+
+    def test4(self):
+        expected = 123.0
+        self.assertEqual(expected, conv_num('123.'), self.message)
+
+    def test5(self):
+        expected = 2772
+        self.assertEqual(expected, conv_num('0xAD4'), self.message)
+
+    def test6(self):
+        expected = None
+        self.assertEqual(expected, conv_num('0xAZ4'), self.message)
+
+    def test7(self):
+        expected = None
+        self.assertEqual(expected, conv_num('12345A'), self.message)
+
+    def test8(self):
+        expected = None
+        self.assertEqual(expected, conv_num('12.3.45'), self.message)
 
 
 class TestCase_MyDateTime(unittest.TestCase):
