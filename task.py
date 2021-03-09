@@ -1,7 +1,6 @@
 def conv_num(num_str):
     characters = "0123456789abcdefghijklmnopqrstuvwxyz"
-    x = sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
-    return x
+    return sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
 
 
 # determine how many days in a year (leap year or not)
