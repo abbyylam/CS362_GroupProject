@@ -17,7 +17,7 @@ class TestCase_MyDateTime(unittest.TestCase):
         self.assertEqual(expected, my_datetime(0))
 
     def test2(self):
-        expected = '11-29-1972'
+        expected = '11-29-1973'
         self.assertEqual(expected, my_datetime(123456789))
 
     def test3(self):
@@ -30,7 +30,6 @@ class TestCase_MyDateTime(unittest.TestCase):
 
 
 class TestCase_ConvEndian(unittest.TestCase):
-
     message = 'Unexpected result!'
 
     def test1(self):
