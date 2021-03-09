@@ -1,14 +1,15 @@
 def conv_num(num_str):
     characters = "0123456789abcdefghijklmnopqrstuvwxyz"
-    x = sum(characters.index(x ) *3 6* *i for i, x in enumerate(num_str[::-1]))
+    x = sum(characters.index(x)*36**i for i, x in enumerate(num_str[::-1]))
     return x
 
 
 def my_datetime(num_sec):
+
     # determine how many days in a year (leap year or not)
     def leap_year_check(year):
-        # leap year if year number is divisible by 4
-        # or  400 except if by 100
+        # leap year if year number is divisible
+        # by 4 or  400 except if by 100
         if year % 4 == 0 and (year % 400 == 0 or year % 100 != 0):
             return 366
         elif year % 100 == 0:
@@ -17,7 +18,7 @@ def my_datetime(num_sec):
         else:
             return 365
 
-    # determine year
+    # determine year using num_sec
     def get_year(days):
         # epoch year
         year = 1970
@@ -37,20 +38,17 @@ def my_datetime(num_sec):
             year = year + 1
         return year, days
 
-    # determine month and day
+    # determine month and day from get_year function
     def get_month(days, year):
         # if zero days left, first of month
         if days == 0:
             days = 1
-
         # if leap year, February has 29 days
         if leap_year_check(year) == 366:
             months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
         # if not leap year
         else:
             months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
         # epoch month
         month_num = 1
 
@@ -60,7 +58,6 @@ def my_datetime(num_sec):
                 days = days - x
                 # each month, increment month
                 month_num = month_num + 1
-
             # if not enough days for month
             else:
                 break
@@ -72,7 +69,6 @@ def my_datetime(num_sec):
     year, days = get_year(num_days)
     # get month and day from get_month function
     month, days = get_month(days, year)
-
     # date formatting
     date = "%02d-%02d-%d" % (month, days, year)
     return date
@@ -105,7 +101,7 @@ def conv_endian(num, endian='big'):
     i = len(rawHex) - 1
     charsInString = 0
     currentByteStr = ''
-    whil e(i >= 0):
+    while(i >= 0):
         # add a space after every byte but not before the first byte
         if (charsInString % 2 == 0) and outputStr != '':
             # add space character after byte
@@ -153,12 +149,12 @@ def abs_value(num):
 def calc_raw_hex(num):
     # store the working (raw/unformatted) hex code
     workingHex = []
-    whil e(num != 0):
+    while(num != 0):
         # store the remainder
         tmpRemainder = num % 16
 
         # append a alphanumeric or alphabetic character
-        i f(tmpRemainder < 10):
+        if(tmpRemainder < 10):
             workingHex.append(chr(tmpRemainder + 48))
         else:
             workingHex.append(chr(tmpRemainder + 55))
